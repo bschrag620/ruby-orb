@@ -9,6 +9,9 @@ fi
 if [ -n "$PARAM_OVERRIDE_LOCKFILE" ] && [ -f "$PARAM_OVERRIDE_LOCKFILE" ]; then
     echo "Using $PARAM_OVERRIDE_LOCKFILE as lock file"
     cp "$PARAM_OVERRIDE_LOCKFILE" $TARGET_DIR/ruby-project-lockfile
+elif [ -n "$DEPENDENCIES_NEXT" ] && [ -f "Gemfile_next.lock" ]; then
+    echo "Using Gemfile_next.lock as lock file"
+    cp Gemfile_next.lock $TARGET_DIR/ruby-project-lockfile
 elif [[ "$PARAM_GEMFILE" == *.rb ]]; then
     GEMS_LOCKED="${PARAM_GEMFILE%.rb}.locked"
 
@@ -21,6 +24,6 @@ elif [[ "$PARAM_GEMFILE" == *.rb ]]; then
 elif [ -f "$PARAM_GEMFILE.lock" ]; then
     echo "Using $PARAM_GEMFILE.lock as lock file"
     cp "$PARAM_GEMFILE.lock" $TARGET_DIR/ruby-project-lockfile
-else 
+else
     echo "Unable to determine lock file for $PARAM_GEMFILE."
 fi
