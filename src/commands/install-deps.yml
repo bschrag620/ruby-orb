@@ -7,7 +7,7 @@ parameters:
   only-gemfile-cache-key:
     type: boolean
     default: false
-    description: When enabled only uses the cache key that contains the Gemile.lock sha for restoring cache.
+    description: When enabled only uses the cache key that contains the Gemile.lock checksum for restoring cache.
   clean-bundle:
     description: >
       Run `bundle clean --force` after `bundle install` to clean Bundler before saving dependencies to cache.
