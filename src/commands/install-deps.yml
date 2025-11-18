@@ -75,19 +75,19 @@ steps:
   - when:
       condition: <<parameters.with-cache>>
       steps:
-        when:
-          condition: << parameters.only-use-gemfile-checksum-cache-key >>
-          steps:
-            - restore_cache:
-                keys:
-                  - << parameters.key >>-<<#parameters.include-arch-in-cache-key>>{{ arch }}-<</parameters.include-arch-in-cache-key>><<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "/tmp/ruby-project-lockfile" }}
-        unless:
-          condition: << parameters.only-use-gemfile-checksum-cache-key >>
-          steps:
-            - restore_cache:
-                keys:
-                  - << parameters.key >>-<<#parameters.include-arch-in-cache-key>>{{ arch }}-<</parameters.include-arch-in-cache-key>><<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "/tmp/ruby-project-lockfile" }}
-                  - << parameters.key >>-<<#parameters.include-arch-in-cache-key>>{{ arch }}-<</parameters.include-arch-in-cache-key>><<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>
+        - when:
+            condition: << parameters.only-use-gemfile-checksum-cache-key >>
+            steps:
+              - restore_cache:
+                  keys:
+                    - << parameters.key >>-<<#parameters.include-arch-in-cache-key>>{{ arch }}-<</parameters.include-arch-in-cache-key>><<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "/tmp/ruby-project-lockfile" }}
+        - unless:
+            condition: << parameters.only-use-gemfile-checksum-cache-key >>
+            steps:
+              - restore_cache:
+                  keys:
+                    - << parameters.key >>-<<#parameters.include-arch-in-cache-key>>{{ arch }}-<</parameters.include-arch-in-cache-key>><<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>{{ checksum "/tmp/ruby-project-lockfile" }}
+                    - << parameters.key >>-<<#parameters.include-arch-in-cache-key>>{{ arch }}-<</parameters.include-arch-in-cache-key>><<#parameters.include-branch-in-cache-key>>{{ .Branch }}-<</parameters.include-branch-in-cache-key>>
   - run:
       name: Install Bundler
       working_directory: <<parameters.app-dir>>
